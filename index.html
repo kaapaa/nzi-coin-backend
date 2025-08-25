@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NZI Coins - Blitzkrieg Tap</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Coin Animations Container -->
+    <div id="floatingCoins"></div>
+
+    <!-- TAP Screen (Main Game) -->
+    <div id="tapScreen" class="screen active">
+        <header class="game-header">
+            <div class="coin-display glass-card">
+                <div class="coin-icon">🪙</div>
+                <span id="coinCounter">0</span>
+                <span class="coin-label">NZI</span>
+            </div>
+            <div class="energy-display">
+                <div class="energy-bar-container glass-card">
+                    <div class="energy-bar" id="energyBar"></div>
+                    <span class="energy-text" id="energyText">100/100</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="tap-area">
+            <div class="stats-row">
+                <div class="stat-pill glass-card">
+                    <span class="stat-icon">⚡</span>
+                    <span id="coinsPerTapDisplay">1</span>/tap
+                </div>
+                <div class="stat-pill glass-card">
+                    <span class="stat-icon">🔋</span>
+                    <span id="energyRegenDisplay">30m</span> regen
+                </div>
+            </div>
+            
+            <div class="mascot-container">
+                <div class="tap-coin glass-card" id="tapCoin">
+                    <div class="helmet-mascot">🪖</div>
+                    <div class="coin-glow"></div>
+                    <div class="tap-effect" id="tapEffect"></div>
+                </div>
+                <div class="tap-instruction">
+                    <span class="tap-text">TAP TO EARN!</span>
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-card glass-card">
+                    <div class="progress-item">
+                        <span class="progress-label">Total Earned:</span>
+                        <span class="progress-value" id="totalEarned">0</span>
+                    </div>
+                    <div class="progress-item">
+                        <span class="progress-label">Total Taps:</span>
+                        <span class="progress-value" id="totalTaps">0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- INVEST Screen -->
+    <div id="investScreen" class="screen">
+        <header class="screen-header">
+            <h2 class="screen-title">⚡ Blitzkrieg Investments</h2>
+            <div class="coin-display glass-card">
+                <div class="coin-icon">🪙</div>
+                <span id="investCoinCounter">0</span>
+                <span class="coin-label">NZI</span>
+            </div>
+        </header>
+
+        <main class="invest-content">
+            <div class="investments-grid">
+                <div class="investment-card glass-card">
+                    <div class="investment-header">
+                        <div class="investment-icon">⚡</div>
+                        <h3>Energy Blitz</h3>
+                        <div class="investment-badge">24h</div>
+                    </div>
+                    <div class="investment-info">
+                        <p>Supercharge your energy capacity</p>
+                        <div class="investment-stats">
+                            <div class="stat-row">
+                                <span>Level: <span id="energyCapLevel">1</span></span>
+                                <span>Current: <span id="energyCapCurrent">100</span></span>
+                            </div>
+                            <div class="next-level">Next: <span id="energyCapNext">150</span></div>
+                        </div>
+                    </div>
+                    <button class="investment-btn" id="energyCapBtn">
+                        Upgrade - <span id="energyCapCost">100</span> NZI
+                    </button>
+                </div>
+
+                <div class="investment-card glass-card">
+                    <div class="investment-header">
+                        <div class="investment-icon">🔋</div>
+                        <h3>Panzer Power</h3>
+                        <div class="investment-badge">48h</div>
+                    </div>
+                    <div class="investment-info">
+                        <p>Accelerate energy regeneration</p>
+                        <div class="investment-stats">
+                            <div class="stat-row">
+                                <span>Level: <span id="energyRegenLevel">1</span></span>
+                                <span>Current: <span id="energyRegenCurrent">30m</span></span>
+                            </div>
+                            <div class="next-level">Next: <span id="energyRegenNext">25m</span></div>
+                        </div>
+                    </div>
+                    <button class="investment-btn" id="energyRegenBtn">
+                        Upgrade - <span id="energyRegenCost">150</span> NZI
+                    </button>
+                </div>
+
+                <div class="investment-card glass-card">
+                    <div class="investment-header">
+                        <div class="investment-icon">💰</div>
+                        <h3>Eagle Economics</h3>
+                        <div class="investment-badge">72h</div>
+                    </div>
+                    <div class="investment-info">
+                        <p>Multiply coins per tap</p>
+                        <div class="investment-stats">
+                            <div class="stat-row">
+                                <span>Level: <span id="coinsPerTapLevel">1</span></span>
+                                <span>Current: <span id="coinsPerTapCurrentShop">1</span></span>
+                            </div>
+                            <div class="next-level">Next: <span id="coinsPerTapNextShop">2</span></div>
+                        </div>
+                    </div>
+                    <button class="investment-btn" id="coinsPerTapBtn">
+                        Upgrade - <span id="coinsPerTapCost">200</span> NZI
+                    </button>
+                </div>
+            </div>
+
+            <!-- Staking Section -->
+            <div class="staking-section">
+                <div class="staking-card glass-card">
+                    <div class="staking-header">
+                        <div class="staking-icon">🔒</div>
+                        <div class="staking-info">
+                            <h3>🔒 STAKING COMING SOON</h3>
+                            <p class="staking-subtitle">Earn passive NZI while you sleep!</p>
+                        </div>
+                        <div class="coming-soon-badge">SOON</div>
+                    </div>
+                    <div class="staking-description">
+                        <p>Stake your coins for maximum returns and earn rewards 24/7 without lifting a finger!</p>
+                        <div class="staking-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">💎</span>
+                                <span>High APY rewards</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔐</span>
+                                <span>Secure staking pools</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⏰</span>
+                                <span>Flexible lock periods</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="staking-notify-btn" id="stakingNotifyBtn">
+                        🔔 Notify Me When Available
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FRIENDS Screen -->
+    <div id="friendsScreen" class="screen">
+        <header class="screen-header">
+            <h2 class="screen-title">👥 Recruitment Center</h2>
+            <div class="coin-display glass-card">
+                <div class="coin-icon">🪙</div>
+                <span id="friendsCoinCounter">0</span>
+                <span class="coin-label">NZI</span>
+            </div>
+        </header>
+
+        <main class="friends-content">
+            <div class="profile-card glass-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">🪖</div>
+                    <div class="profile-info">
+                        <h3>Tap Commander</h3>
+                        <div class="rank-badge">Rank: Oberst</div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="profileCoins">0</span>
+                        <span class="stat-label">Total NZI</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="profileFriends">0</span>
+                        <span class="stat-label">Recruits</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="referral-section">
+                <div class="referral-card glass-card">
+                    <h3>🎯 Recruit Friends</h3>
+                    <p>Invite comrades to earn bonus NZI!</p>
+                    <div class="referral-code-container">
+                        <div class="referral-code" id="referralCode">BLITZ2025</div>
+                        <button class="share-btn" id="shareBtn">Share Code</button>
+                    </div>
+                    <div class="referral-reward">
+                        <span class="reward-text">+1000 NZI per successful recruit!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard-section">
+                <div class="leaderboard-card glass-card">
+                    <h3>🏆 Command Leaderboard</h3>
+                    <div class="leaderboard-list">
+                        <div class="leader-item">
+                            <div class="leader-rank">🥇</div>
+                            <div class="leader-info">
+                                <span class="leader-name">General Max</span>
+                                <span class="leader-score">2.5M NZI</span>
+                            </div>
+                        </div>
+                        <div class="leader-item">
+                            <div class="leader-rank">🥈</div>
+                            <div class="leader-info">
+                                <span class="leader-name">Major Fritz</span>
+                                <span class="leader-score">1.8M NZI</span>
+                            </div>
+                        </div>
+                        <div class="leader-item you-position">
+                            <div class="leader-rank">#127</div>
+                            <div class="leader-info">
+                                <span class="leader-name">You</span>
+                                <span class="leader-score" id="leaderboardScore">0 NZI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- TASKS Screen -->
+    <div id="tasksScreen" class="screen">
+        <header class="screen-header">
+            <h2 class="screen-title">✅ Mission Command</h2>
+            <div class="coin-display glass-card">
+                <div class="coin-icon">🪙</div>
+                <span id="tasksCoinCounter">0</span>
+                <span class="coin-label">NZI</span>
+            </div>
+        </header>
+
+        <main class="tasks-content">
+            <div class="daily-streak glass-card">
+                <div class="streak-header">
+                    <div class="streak-icon">🔥</div>
+                    <div class="streak-info">
+                        <h3>Daily Blitz Streak</h3>
+                        <span class="streak-count">Day <span id="streakCount">1</span></span>
+                    </div>
+                </div>
+                <div class="streak-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                    <span class="progress-text">Next reward: +500 NZI</span>
+                </div>
+            </div>
+
+            <div class="tasks-list">
+                <div class="task-card glass-card" id="dailyLoginTask">
+                    <div class="task-header">
+                        <div class="task-icon">📅</div>
+                        <div class="task-info">
+                            <h3>Daily Blitz Login</h3>
+                            <p>Login to the battlefield daily</p>
+                        </div>
+                        <div class="task-reward">+100 NZI</div>
+                    </div>
+                    <div class="task-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                        <button class="claim-btn completed">✅ Completed</button>
+                    </div>
+                </div>
+
+                <div class="task-card glass-card" id="tapChampionTask">
+                    <div class="task-header">
+                        <div class="task-icon">👆</div>
+                        <div class="task-info">
+                            <h3>Tap Champion</h3>
+                            <p>Execute 1000 taps</p>
+                        </div>
+                        <div class="task-reward">+500 NZI</div>
+                    </div>
+                    <div class="task-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="tapTaskProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text"><span id="tapTaskCount">0</span>/1000</span>
+                    </div>
+                </div>
+
+                <div class="task-card glass-card" id="recruitTask">
+                    <div class="task-header">
+                        <div class="task-icon">👥</div>
+                        <div class="task-info">
+                            <h3>Recruitment Officer</h3>
+                            <p>Recruit a comrade</p>
+                        </div>
+                        <div class="task-reward">+1000 NZI</div>
+                    </div>
+                    <div class="task-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text">0/1 recruits</span>
+                    </div>
+                </div>
+
+                <div class="task-card glass-card special-task">
+                    <div class="task-header">
+                        <div class="task-icon">⚡</div>
+                        <div class="task-info">
+                            <h3>Energy Master</h3>
+                            <p>Reach 500 max energy</p>
+                        </div>
+                        <div class="task-reward">+2000 NZI</div>
+                    </div>
+                    <div class="task-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="energyTaskProgress" style="width: 20%"></div>
+                        </div>
+                        <span class="progress-text"><span id="energyTaskCount">100</span>/500</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav glass-card">
+        <button class="nav-item active" data-screen="tap">
+            <div class="nav-icon">🪙</div>
+            <span class="nav-label">TAP</span>
+        </button>
+        <button class="nav-item" data-screen="invest">
+            <div class="nav-icon">📈</div>
+            <span class="nav-label">INVEST</span>
+            <div class="nav-badge hidden" id="investBadge">!</div>
+        </button>
+        <button class="nav-item" data-screen="friends">
+            <div class="nav-icon">👥</div>
+            <span class="nav-label">FRIENDS</span>
+            <div class="nav-badge hidden" id="friendsBadge">2</div>
+        </button>
+        <button class="nav-item" data-screen="tasks">
+            <div class="nav-icon">✅</div>
+            <span class="nav-label">TASKS</span>
+            <div class="nav-badge" id="tasksBadge">3</div>
+        </button>
+    </nav>
+
+    <!-- Tutorial Overlay -->
+    <div id="tutorialOverlay" class="tutorial-overlay">
+        <div class="tutorial-content glass-card">
+            <h2>🎖️ Welcome Commander!</h2>
+            <div class="tutorial-steps">
+                <div class="tutorial-step">
+                    <div class="step-icon">🪙</div>
+                    <p>Tap the coin to earn NZI tokens</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-icon">📈</div>
+                    <p>Invest in upgrades to multiply earnings</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-icon">👥</div>
+                    <p>Recruit friends for bonus rewards</p>
+                </div>
+                <div class="tutorial-step">
+                    <div class="step-icon">✅</div>
+                    <p>Complete missions for extra NZI</p>
+                </div>
+            </div>
+            <button class="btn btn--primary btn--lg" id="startGameBtn">
+                🚀 Begin Blitzkrieg!
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
